@@ -109,7 +109,7 @@ export default class PreferencesController {
       snapsAddSnapAccountModalDismissed: false,
       ///: END:ONLY_INCLUDE_IF
       useExternalNameSources: true,
-      disableExternalServices: false,
+      disableExternalServices: true, // consider a name that aligns with the feature
       ...opts.initState,
     };
 
@@ -206,6 +206,8 @@ export default class PreferencesController {
     this.setUseTokenDetection(disableExternalServices);
     this.setUseCurrencyRateCheck(disableExternalServices);
     this.setUsePhishDetect(disableExternalServices);
+    this.setUseAddressBarEnsResolution(disableExternalServices);
+    // TODO: add any other services that should be disabled
   }
 
   /**
