@@ -18,10 +18,10 @@ class ChromeDriver {
   static async build({ openDevToolsForTabs, port }) {
     const args = [
       `--proxy-server=${HTTPS_PROXY_HOST}`, // Set proxy in the way that doesn't interfere with Selenium Manager
-      '--disable-features=OptimizationGuideModelDownloading,OptimizationHintsFetching,OptimizationTargetPredicition,OptimizationHints,NetworkTimeServiceQuerying', // Stop chrome from calling home so much (auto-downloads of AI models; time sync)
+      '--disable-features=OptimizationGuideModelDownloading,OptimizationHintsFetching,OptimizationTargetPrediction,OptimizationHints,NetworkTimeServiceQuerying', // Stop chrome from calling home so much (auto-downloads of AI models; time sync)
       '--disable-component-update', // Stop chrome from calling home so much (auto-update)
-      `--disable-gpu`,
-      `--disable-dev-shm-usage`,
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
     ];
 
     if (process.env.MULTIPROVIDER) {
