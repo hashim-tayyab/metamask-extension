@@ -848,6 +848,7 @@ async function buildEventFragmentProperties({
       TransactionType.tokenMethodSetApprovalForAll,
       TransactionType.tokenMethodTransfer,
       TransactionType.tokenMethodTransferFrom,
+      TransactionType.tokenMethodIncreaseAllowance,
       TransactionType.smart,
       TransactionType.swap,
       TransactionType.swapApproval,
