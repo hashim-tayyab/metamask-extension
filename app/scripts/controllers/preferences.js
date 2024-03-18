@@ -109,7 +109,7 @@ export default class PreferencesController {
       snapsAddSnapAccountModalDismissed: false,
       ///: END:ONLY_INCLUDE_IF
       useExternalNameSources: true,
-      disableExternalServices: true, // consider a name that aligns with the feature
+      disableExternalServices: false,
       ...opts.initState,
     };
 
