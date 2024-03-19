@@ -12,7 +12,6 @@ import {
   setUseTokenDetection,
   setDisableExternalServices,
   setUseAddressBarEnsResolution,
-  openBasicFunctionalityModal,
   setOpenSeaEnabled,
   setUseNftDetection,
   setUse4ByteResolution,
@@ -29,6 +28,7 @@ import {
   ///: END:ONLY_INCLUDE_IF
   getPetnamesEnabled,
 } from '../../../selectors';
+import { openBasicFunctionalityModal } from '../../../ducks/app/app';
 import SecurityTab from './security-tab.component';
 
 const mapStateToProps = (state) => {
