@@ -103,7 +103,6 @@ export default class PreferencesController {
         ? LedgerTransportTypes.webhid
         : LedgerTransportTypes.u2f,
       snapRegistryList: {},
-      transactionSecurityCheckEnabled: false,
       theme: ThemeType.os,
       ///: BEGIN:ONLY_INCLUDE_IF(keyring-snaps)
       snapsAddSnapAccountModalDismissed: false,
@@ -325,17 +324,6 @@ export default class PreferencesController {
    */
   setTheme(val) {
     this.store.updateState({ theme: val });
-  }
-
-  /**
-   * Setter for the `transactionSecurityCheckEnabled` property
-   *
-   * @param transactionSecurityCheckEnabled
-   */
-  setTransactionSecurityCheckEnabled(transactionSecurityCheckEnabled) {
-    this.store.updateState({
-      transactionSecurityCheckEnabled,
-    });
   }
 
   /**
