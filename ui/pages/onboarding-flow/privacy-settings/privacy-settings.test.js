@@ -5,7 +5,22 @@ import thunk from 'redux-thunk';
 import { setBackgroundConnection } from '../../../store/background-connection';
 import { renderWithProvider } from '../../../../test/jest';
 import { CHAIN_IDS } from '../../../../shared/constants/network';
+import { SHOW_BASIC_FUNCTIONALITY_MODAL_OPEN } from '../../../store/actionConstants';
 import PrivacySettings from './privacy-settings';
+
+const mockOpenBasicFunctionalityModal = jest.fn().mockImplementation(() => {
+  return {
+    type: SHOW_BASIC_FUNCTIONALITY_MODAL_OPEN,
+  };
+});
+
+jest.mock('../../../ducks/app/app.ts', () => {
+  return {
+    openBasicFunctionalityModal: () => {
+      return mockOpenBasicFunctionalityModal();
+    },
+  };
+});
 
 describe('Privacy Settings Onboarding View', () => {
   const mockStore = {
@@ -28,6 +43,9 @@ describe('Privacy Settings Onboarding View', () => {
       ipfsGateway: 'test.link',
       useAddressBarEnsResolution: true,
     },
+    appState: {
+      externalServicesOnboardingToggleState: true,
+    },
   };
 
   const store = configureMockStore([thunk])(mockStore);
@@ -43,6 +61,8 @@ describe('Privacy Settings Onboarding View', () => {
   const setUseMultiAccountBalanceCheckerStub = jest.fn();
   const setUseAddressBarEnsResolutionStub = jest.fn();
   const setIncomingTransactionsPreferencesStub = jest.fn();
+  const onboardingToggleBasicFunctionalityOnStub = jest.fn();
+  const setDisableExternalServicesStub = jest.fn();
 
   setBackgroundConnection({
     setFeatureFlag: setFeatureFlagStub,
@@ -55,6 +75,9 @@ describe('Privacy Settings Onboarding View', () => {
     setUseMultiAccountBalanceChecker: setUseMultiAccountBalanceCheckerStub,
     setUseAddressBarEnsResolution: setUseAddressBarEnsResolutionStub,
     setIncomingTransactionsPreferences: setIncomingTransactionsPreferencesStub,
+    setDisableExternalServices: setDisableExternalServicesStub,
+    onboardingToggleBasicFunctionalityOn:
+      onboardingToggleBasicFunctionalityOnStub,
   });
 
   it('should update preferences', () => {
@@ -75,15 +98,18 @@ describe('Privacy Settings Onboarding View', () => {
     const submitButton = getByText('Done');
     // toggle to false
     fireEvent.click(toggles[0]);
-    fireEvent.click(toggles[4]);
+    fireEvent.click(toggles[1]);
     fireEvent.click(toggles[5]);
     fireEvent.click(toggles[6]);
     fireEvent.click(toggles[7]);
     fireEvent.click(toggles[8]);
     fireEvent.click(toggles[9]);
+    fireEvent.click(toggles[10]);
+    expect(mockOpenBasicFunctionalityModal).toHaveBeenCalledTimes(1);
 
     fireEvent.click(submitButton);
 
+    expect(setDisableExternalServicesStub).toHaveBeenCalledTimes(1);
     expect(setIncomingTransactionsPreferencesStub).toHaveBeenCalledTimes(1);
     expect(setUsePhishDetectStub).toHaveBeenCalledTimes(1);
     expect(setUse4ByteResolutionStub).toHaveBeenCalledTimes(1);
@@ -97,7 +123,9 @@ describe('Privacy Settings Onboarding View', () => {
       false,
       expect.anything(),
     );
-
+    expect(setDisableExternalServicesStub.mock.calls[0][0]).toStrictEqual(
+      false,
+    ); // the modal hasn't been interacted with yet, so this is still ends up being false.
     expect(setUsePhishDetectStub.mock.calls[0][0]).toStrictEqual(false);
     expect(setUse4ByteResolutionStub.mock.calls[0][0]).toStrictEqual(false);
     expect(setUseTokenDetectionStub.mock.calls[0][0]).toStrictEqual(true);
