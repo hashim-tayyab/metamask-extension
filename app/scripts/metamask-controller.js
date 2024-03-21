@@ -1432,6 +1432,9 @@ export default class MetamaskController extends EventEmitter {
         const { completedOnboarding: prevCompletedOnboarding } = prevState;
         const { completedOnboarding: currCompletedOnboarding } = currState;
         if (!prevCompletedOnboarding && currCompletedOnboarding) {
+          // TODO: Delete when ready to remove `networkVersion` from provider object
+          this.deprecatedNetworkId = null;
+          this.updateDeprecatedNetworkId();
           this.networkController.lookupNetwork();
           this.triggerNetworkrequests();
         }
@@ -2204,15 +2207,14 @@ export default class MetamaskController extends EventEmitter {
     checkForMultipleVersionsRunning();
 
     if (this.onboardingController.store.getState().completedOnboarding) {
+      // TODO: Delete when ready to remove `networkVersion` from provider object
+      this.deprecatedNetworkId = null;
+      this.updateDeprecatedNetworkId();
       this.networkController.lookupNetwork();
     }
   }
 
-  async triggerNetworkrequests() {
-    // TODO: Delete when ready to remove `networkVersion` from provider object
-    this.deprecatedNetworkId = null;
-    this.updateDeprecatedNetworkId();
-
+  triggerNetworkrequests() {
     this.accountTracker.start();
     this.txController.startIncomingTransactionPolling();
     if (this.preferencesController.store.getState().useCurrencyRateCheck) {
