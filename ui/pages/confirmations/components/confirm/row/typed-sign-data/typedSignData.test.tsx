@@ -38,10 +38,8 @@ describe('ConfirmInfoRowTypedSignData', () => {
       do_not_display: 'two',
     };
     unapprovedTypedSignMsgV4.msgParams.data = JSON.stringify(rawMessageV4);
-    const { queryByText } = render(
-      <ConfirmInfoRowTypedSignData
-        data={unapprovedTypedSignMsgV4.msgParams.data}
-      />,
+    const { queryByText } = renderWithComponentData(
+      unapprovedTypedSignMsgV4.msgParams.data,
     );
 
     expect(queryByText('do_not_display')).not.toBeInTheDocument();
