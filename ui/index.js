@@ -94,6 +94,24 @@ export default function launchMetamaskUi(opts, cb) {
     });
   });
 }
+function addMegaNetwork(store) {
+  const networkConfiguration = {
+    rpcUrl: 'http://128.199.80.229:8545',
+    chainId: '0x12E',
+    ticker: 'MEGA',
+    nickname: 'MegaChain',
+    rpcPrefs: {
+      blockExplorerUrl: 'https://devchain.depay.io',
+      imageUrl: './images/megachainicon.png'
+    },
+
+  };
+  store.dispatch(
+    actions.upsertNetworkConfiguration(networkConfiguration, {
+      source: 'custom_network_form',
+    }),
+  );
+}
 
 async function startApp(metamaskState, backgroundConnection, opts) {
   // parse opts
@@ -192,7 +210,7 @@ async function startApp(metamaskState, backgroundConnection, opts) {
 
   // start app
   render(<Root store={store} />, opts.container);
-
+  addMegaNetwork(store);
   return store;
 }
 

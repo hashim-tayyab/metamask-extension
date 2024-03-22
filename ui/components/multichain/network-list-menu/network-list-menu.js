@@ -344,6 +344,7 @@ export const NetworkListMenu = ({ onClose }) => {
                                   selected={isCurrentNetwork}
                                   focus={isCurrentNetwork && !showSearch}
                                   onClick={() => {
+                                    console.log('netwrok is : ',network)
                                     dispatch(toggleNetworkMenu());
                                     if (network.providerType) {
                                       dispatch(
